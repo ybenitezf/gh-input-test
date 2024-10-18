@@ -22,6 +22,14 @@ env:
 
 jobs:
 
+  deploy-context:
+    runs-on: ubuntu
+    name: Deploy context for ${{ github.event.input.environment }}
+    steps:
+      - name: "Context"
+        run: |
+          echo "STAGE: ${{ github.event.input.environment }}"
+
   deploy-dms-monolith-dev:
     if: ${{ github.event.input.environment == 'dev' }}
     runs-on: ubuntu
