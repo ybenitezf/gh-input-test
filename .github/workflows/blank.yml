@@ -1,0 +1,36 @@
+name: Deploy Application
+run-name: Re-Deploy services - ${{ inputs.environment }} by @${{ github.actor }}
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        required: true
+        description: Environment to publish e.g. sit, dev
+        default: dev
+        type: choice
+        options:
+          - dev
+          - staging
+
+permissions:
+  contents: read
+  id-token: write
+
+env:
+  STAGE: ${{ input.environment }}
+
+jobs:
+
+  deploy-dms-monolith-dev:
+    if: ${{ input.environment == 'dev' }}
+    runs-on: ubuntu
+    name: Deploy ${{ input.environment }}
+    env:
+      IS_TESTING: false
+    steps:
+      - uses: actions/checkout@v4
+      - name: "is Testing"
+        run: |
+          echo "Environment: ${{ env.STAGE }}"
+          echo "Is testing: ${{ env.IS_TESTING }}"
