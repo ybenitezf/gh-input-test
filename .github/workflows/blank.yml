@@ -24,12 +24,22 @@ on:
         required: true
 
 jobs:
+  set-stage-var:
+    runs-on: ubuntu-latest
+    steps:
+      - name: set for dev
+        if: contains(${{ inputs.environment }}, 'dev')
+        run: |
+          echo "STAGE=dev" >> $GITHUB_ENV
+      - name: set for staging
+        if: contains(${{ inputs.environment }}, 'staging')
+        run: |
+          echo "STAGE=staging" >> $GITHUB_ENV
+    
   print-tag:
     runs-on: ubuntu-latest
     if:  ${{ inputs.print_tags == true }} 
     name: Deploy app to ${{ inputs.environment }}
-    env:
-      STAGE: ${{ inputs.environment }}
     steps:
       - name: Print the input tag to STDOUT
         run: | 
