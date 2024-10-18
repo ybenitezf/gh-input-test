@@ -45,4 +45,4 @@ jobs:
       - name: Print the input tag to STDOUT
         run: | 
           echo  The tags are ${{ inputs.tags }} 
-          echo  The STAGE is $STAGE
+          echo  The STAGE is ${{ env.STAGE }}
