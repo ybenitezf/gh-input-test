@@ -30,6 +30,6 @@ jobs:
     steps:
       - name: Print the input tag to STDOUT
         run: | 
-          export STAGE=${{ input.environment }}
+          export STAGE=${{ inputs.environment }}
           echo  The tags are ${{ inputs.tags }} 
           echo  The STAGE is $STAGE
