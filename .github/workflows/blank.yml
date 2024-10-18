@@ -18,14 +18,14 @@ permissions:
   id-token: write
 
 env:
-  STAGE: ${{ input.environment }}
+  STAGE: ${{ github.event.input.environment }}
 
 jobs:
 
   deploy-dms-monolith-dev:
-    if: ${{ input.environment == 'dev' }}
+    if: ${{ github.event.input.environment == 'dev' }}
     runs-on: ubuntu
-    name: Deploy ${{ input.environment }}
+    name: Deploy ${{ github.event.input.environment }}
     env:
       IS_TESTING: false
     steps:
