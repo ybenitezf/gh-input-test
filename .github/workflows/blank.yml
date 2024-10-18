@@ -27,6 +27,10 @@ jobs:
   print-tag:
     runs-on: ubuntu-latest
     if:  ${{ inputs.print_tags == true }} 
+    env:
+      STAGE: ${{ input.environment }}
     steps:
       - name: Print the input tag to STDOUT
-        run: echo  The tags are ${{ inputs.tags }} 
+        run: | 
+          echo  The tags are ${{ inputs.tags }} 
+          echo  The STAGE is ${{ env.STAGE }}
