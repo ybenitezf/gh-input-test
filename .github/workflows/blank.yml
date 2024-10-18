@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-latest
     if:  ${{ inputs.print_tags == true }} 
     env:
-      STAGE: ${{ input.environment }}
+      STAGE: ${{ github.event.input.environment }}
     steps:
       - name: Print the input tag to STDOUT
         run: | 
