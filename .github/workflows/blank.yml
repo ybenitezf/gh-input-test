@@ -1,44 +1,32 @@
-name: Deploy Application
-run-name: Re-Deploy services - ${{ inputs.environment }} by @${{ github.actor }}
-
 on:
   workflow_dispatch:
     inputs:
-      environment:
+      logLevel:
+        description: 'Log level'
         required: true
-        description: Environment to publish e.g. sit, dev
-        default: dev
+        default: 'warning'
         type: choice
         options:
-          - dev
-          - staging
-
-permissions:
-  contents: read
-  id-token: write
-
-env:
-  STAGE: ${{ github.event.input.environment }}
+          - info
+          - warning
+          - debug
+      print_tags:
+        description: 'True to print to STDOUT'
+        required: true
+        type: boolean
+      tags:
+        description: 'Test scenario tags'
+        required: true
+        type: string
+      environment:
+        description: 'Environment to run tests against'
+        type: environment
+        required: true
 
 jobs:
-
-  deploy-context:
-    runs-on: ubuntu
-    name: Deploy context for ${{ github.event.input.environment }}
+  print-tag:
+    runs-on: ubuntu-latest
+    if:  ${{ inputs.print_tags }} 
     steps:
-      - name: "Context"
-        run: |
-          echo "STAGE: ${{ github.event.input.environment }}"
-
-  deploy-dms-monolith-dev:
-    if: ${{ github.event.input.environment == 'dev' }}
-    runs-on: ubuntu
-    name: Deploy ${{ github.event.input.environment }}
-    env:
-      IS_TESTING: false
-    steps:
-      - uses: actions/checkout@v4
-      - name: "is Testing"
-        run: |
-          echo "Environment: ${{ env.STAGE }}"
-          echo "Is testing: ${{ env.IS_TESTING }}"
+      - name: Print the input tag to STDOUT
+        run: echo  The tags are ${{ inputs.tags }} 
