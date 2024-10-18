@@ -27,6 +27,7 @@ jobs:
   print-tag:
     runs-on: ubuntu-latest
     if:  ${{ inputs.print_tags == true }} 
+    name: Deploy app to ${{ inputs.environment }}
     steps:
       - name: Print the input tag to STDOUT
         run: | 
